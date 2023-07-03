@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">FireBaseJava</string>
+    <string name="login">login</string>
+    <string name="password">password</string>
+    <string name="email">username/email</string>
+    <string name="entButton">enter</string>
+    <string name="regNorm">click here to Register.</string>
+    <string name="welc">welcome.</string>
 </resources>
