@@ -6,4 +6,5 @@
     <string name="entButton">enter</string>
     <string name="regNorm">click here to Register.</string>
     <string name="welc">welcome.</string>
+    <string name="logNorm">click here to log in.</string>
 </resources>
