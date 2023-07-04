@@ -79,7 +79,7 @@ public class Login extends AppCompatActivity {
             if (TextUtils.isEmpty(password)){
                 Toast.makeText(Login.this,"password cannot be empty.",Toast.LENGTH_SHORT).show();
             }
-            if (editEmail != null && editPass != null){
+            if (editEmail == null && editPass == null){
                 Toast.makeText(Login.this,"have you tried logging in?",Toast.LENGTH_SHORT).show();
             }
             else{

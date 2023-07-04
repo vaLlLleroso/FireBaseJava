@@ -4,12 +4,15 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
     Button btn;
     TextView textView;
     FirebaseUser user;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("userlist");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
         else{
             textView.setText(user.getEmail());
         }
+
+        Spinner sp = findViewById(R.id.u_spinner);
+        sp.setPrompt(myRef.getKey());
 
         btn.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
