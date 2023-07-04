@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "200184720801",
+    "firebase_url": "https://firebayz-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "firebayz",
     "storage_bucket": "firebayz.appspot.com"
   },

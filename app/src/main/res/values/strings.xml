@@ -2,11 +2,13 @@
     <string name="app_name">FireBaseJava</string>
     <string name="login">login</string>
     <string name="password">password</string>
-    <string name="email">username/email</string>
+    <string name="email">email</string>
+    <string name="displayN">username</string>
     <string name="entButton">enter</string>
     <string name="regNorm">click here to Register.</string>
     <string name="welc">welcome.</string>
     <string name="logNorm">click here to log in.</string>
     <string name="logout">log out</string>
     <string name="loginimgdesc">PinkCircle + white logo</string>
+    <string name="emailinfo">"email: "</string>
 </resources>

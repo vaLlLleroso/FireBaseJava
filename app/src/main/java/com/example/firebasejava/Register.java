@@ -10,6 +10,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -22,10 +23,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 public class Register extends AppCompatActivity {
 
-    TextInputEditText editEmail, editPass;
+    TextInputEditText editEmail, editPass, editUN;
     Button buttonReg;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
@@ -43,20 +48,26 @@ public class Register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("userlist");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         editEmail = findViewById(R.id.emailIN);
         editPass = findViewById(R.id.passwordIN);
+        editUN = findViewById(R.id.dispIN);
         buttonReg = findViewById(R.id.regBTN);
         mAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressBar);
-
+        Toast.makeText(Register.this, ref.toString(),
+                Toast.LENGTH_SHORT).show();
         buttonReg.setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
-            String email, password;
-            email = String.valueOf(editEmail.getText());
-            password = String.valueOf(editPass.getText());
+            String email, password, user;
+            email = Objects.requireNonNull(editEmail.getText()).toString();
+            password = Objects.requireNonNull(editPass.getText()).toString();
+            user = Objects.requireNonNull(editUN.getText()).toString();
+
 
             if (TextUtils.isEmpty(email)){
                 Toast.makeText(Register.this,"email cannot be empty.",Toast.LENGTH_SHORT).show();
@@ -67,6 +78,15 @@ public class Register extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
+                            User newUser = new User(email,user,password);
+                            ref.child(user).setValue(newUser).addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    Log.d("TAG", "Data successfully written.");
+                                } else {
+                                    Log.d("TAG", Objects.requireNonNull(task1.getException()).getMessage());
+                                }
+                            });
+
                             progressBar.setVisibility(View.GONE);
                             Toast.makeText(Register.this, "Account Created.",
                                     Toast.LENGTH_SHORT).show();
@@ -105,5 +125,7 @@ public class Register extends AppCompatActivity {
         ss.setSpan(cs1, 13,21, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textView.setText(ss);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
+
     }
 }
+
