@@ -79,13 +79,7 @@ public class Register extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             User newUser = new User(email,user,password);
-                            ref.child(user).setValue(newUser).addOnCompleteListener(task1 -> {
-                                if (task1.isSuccessful()) {
-                                    Log.d("TAG", "Data successfully written.");
-                                } else {
-                                    Log.d("TAG", Objects.requireNonNull(task1.getException()).getMessage());
-                                }
-                            });
+                            ref.child(user).setValue(newUser);
 
                             progressBar.setVisibility(View.GONE);
                             Toast.makeText(Register.this, "Account Created.",
