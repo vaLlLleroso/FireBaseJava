@@ -7,4 +7,6 @@
     <string name="regNorm">click here to Register.</string>
     <string name="welc">welcome.</string>
     <string name="logNorm">click here to log in.</string>
+    <string name="logout">log out</string>
+    <string name="loginimgdesc">PinkCircle + white logo</string>
 </resources>

@@ -8,6 +8,16 @@
     android:layout_height="match_parent"
     tools:context=".Login">
 
+    <ImageView
+        android:background="@drawable/bg"
+        android:src="@drawable/logo1"
+        android:id="@+id/pinkLogo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:padding="20sp"
+        app:layoutDescription="@xml/activity_login_scene"
+        android:contentDescription="@string/loginimgdesc" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,11 +1,8 @@
 package com.example.firebasejava;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -18,10 +15,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -49,7 +46,6 @@ public class Login extends AppCompatActivity {
         buttonLogIn = findViewById(R.id.loginBTN);
         mAuth = FirebaseAuth.getInstance();
 
-
         TextView textView = findViewById(R.id.regText);
         String text = "click here to Register.";
 
@@ -58,7 +54,9 @@ public class Login extends AppCompatActivity {
         ClickableSpan cs1 = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-                startActivity(new Intent(Login.this, Register.class));
+                Bundle b = ActivityOptions.makeSceneTransitionAnimation(Login.this).toBundle();
+                startActivity(new Intent(Login.this, Register.class), b);
+                finish();
             }
             @Override
             public void updateDrawState(TextPaint ds){
@@ -70,38 +68,38 @@ public class Login extends AppCompatActivity {
         textView.setText(ss);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
 
-        buttonLogIn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                String email, password;
-                email = String.valueOf(editEmail.getText());
-                password = String.valueOf(editPass.getText());
+        buttonLogIn.setOnClickListener(view -> {
 
-                if (TextUtils.isEmpty(email)){
-                    Toast.makeText(Login.this,"email cannot be empty.",Toast.LENGTH_SHORT).show();
-                }
-                if (TextUtils.isEmpty(password)){
-                    Toast.makeText(Login.this,"password cannot be empty.",Toast.LENGTH_SHORT).show();
-                }
-
+            String email, password;
+            email = String.valueOf(editEmail.getText());
+            password = String.valueOf(editPass.getText());
+            if (TextUtils.isEmpty(email)){
+                Toast.makeText(Login.this,"email cannot be empty.",Toast.LENGTH_SHORT).show();
+            }
+            if (TextUtils.isEmpty(password)){
+                Toast.makeText(Login.this,"password cannot be empty.",Toast.LENGTH_SHORT).show();
+            }
+            if (editEmail != null && editPass != null){
+                Toast.makeText(Login.this,"have you tried logging in?",Toast.LENGTH_SHORT).show();
+            }
+            else{
                 mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(),"Welcome Back.", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Toast.makeText(Login.this, "bad credentials.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getApplicationContext(),"Welcome Back.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(Login.this, "bad credentials.",
+                                        Toast.LENGTH_SHORT).show();
                             }
                         });
-
             }
+
+
+
         });
     }
 }

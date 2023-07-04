@@ -1,7 +1,11 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.FireBaseJava" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.FireBaseJava_dark" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- enable window content transitions -->
+        <item name="android:windowActivityTransitions">true</item>
+
     </style>
+    <style name="Theme.FireBaseJava_dark" parent="Base.Theme.FireBaseJava_dark" />
 </resources>
